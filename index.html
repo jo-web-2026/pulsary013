@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#090712" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="PULSARY" />
+  <title>PULSARY</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <div class="grain"></div>
+    <div class="violet-glow"></div>
+
+    <main class="app-card">
+      <header class="hero">
+        <div>
+          <h1>PULSARY</h1>
+          <p>Encrypt. Send. Protect.</p>
+        </div>
+        <div class="hero-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 5-3.2 8.6-7 10-3.8-1.4-7-5-7-10V6l7-3z"/><path d="M8 12h2l1-4 3 8 1-4h2"/></svg>
+        </div>
+      </header>
+
+      <section class="tab-screen active" data-screen="encode">
+        <section class="panel pin-panel">
+          <div class="section-no">01</div>
+          <div class="panel-title">
+            <strong>PIN</strong>
+            <span>4-DIGIT PIN</span>
+          </div>
+
+          <div class="pin-box">
+            <input id="pinInput" inputmode="numeric" maxlength="4" autocomplete="off" aria-label="PIN" />
+            <div class="pin-dots" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+          </div>
+
+          <div class="panel-note">
+            <svg viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 5-3.2 8.6-7 10-3.8-1.4-7-5-7-10V6l7-3z"/><path d="M12 8v6"/><path d="M12 17h.01"/></svg>
+            <span>Keep your PIN secret and secure.</span>
+          </div>
+        </section>
+
+        <section class="panel message-panel">
+          <div class="section-head">
+            <div class="section-no">02</div>
+            <h2>SECRET MESSAGE</h2>
+            <div class="secure-label">
+              <svg viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+              <span>End-to-end encrypted</span>
+            </div>
+          </div>
+
+          <div class="message-field">
+            <textarea id="messageInput" maxlength="160" placeholder="Type your message..."></textarea>
+            <div id="charCounter" class="counter">0 / 160</div>
+          </div>
+        </section>
+
+        <section class="panel encode-panel">
+          <div class="section-no">03</div>
+          <div class="encode-copy">
+            <h2>ENCODE MESSAGE</h2>
+            <p>Secure. Private. Unbreakable.</p>
+          </div>
+          <button id="encodeBtn" class="encode-btn">
+            <svg viewBox="0 0 24 24"><path d="M12 2l2.8 6.7L22 12l-7.2 3.3L12 22l-2.8-6.7L2 12l7.2-3.3L12 2z"/></svg>
+            <span>ENCODE</span>
+          </button>
+        </section>
+
+        <section class="panel code-panel">
+          <div class="section-head">
+            <div class="section-no">04</div>
+            <h2>YOUR SYMBOLIC CODE</h2>
+            <div class="waiting">
+              <svg viewBox="0 0 24 24"><path d="M3 12h4l2-5 4 10 2-5h6"/></svg>
+              <span id="signalState">Waiting for signal...</span>
+            </div>
+          </div>
+
+          <div class="code-box">
+            <div id="codeOutput" class="code-output">Encrypted</div>
+            <div class="status"><i></i><span>Encrypted</span></div>
+            <div class="line"></div>
+            <div class="code-actions">
+              <button id="copyBtn">
+                <svg viewBox="0 0 24 24"><rect x="8" y="8" width="11" height="11" rx="2"/><rect x="5" y="5" width="11" height="11" rx="2"/></svg>
+                <span>COPY CODE</span>
+              </button>
+              <button id="shareBtn">
+                <svg viewBox="0 0 24 24"><path d="M12 16V4"/><path d="M7 9l5-5 5 5"/><path d="M5 14v5h14v-5"/></svg>
+                <span>SHARE CODE</span>
+              </button>
+            </div>
+          </div>
+
+          <p class="safe-note">
+            <svg viewBox="0 0 24 24"><rect x="6" y="10" width="12" height="10" rx="2"/><path d="M9 10V7a3 3 0 0 1 6 0v3"/></svg>
+            Only the right key reveals the message.
+          </p>
+        </section>
+      </section>
+
+      <section class="tab-screen" data-screen="decode">
+        <section class="panel page-panel">
+          <h2>DECODE SIGNAL</h2>
+          <p>Vlož symbolický kód a správny PIN.</p>
+
+          <label>SYMBOLIC CODE</label>
+          <input id="decodeCode" class="text-input" placeholder="⊕ ✦ C36 ✦ ⊗" autocomplete="off" />
+
+          <label>4-DIGIT PIN</label>
+          <input id="decodePin" class="text-input" inputmode="numeric" maxlength="4" placeholder="Enter PIN" autocomplete="off" />
+
+          <button id="decodeBtn" class="full-btn">REVEAL MESSAGE</button>
+        </section>
+
+        <section class="panel page-panel">
+          <h2>REVEALED MESSAGE</h2>
+          <p id="decodedMessage" class="revealed">Message will appear here.</p>
+        </section>
+
+        <section class="panel page-panel">
+          <div class="history-head">
+            <div>
+              <h2>LOCAL HISTORY</h2>
+              <p>Saved signals on this device.</p>
+            </div>
+            <button id="clearHistory" class="clear-btn">Clear</button>
+          </div>
+          <div id="historyList" class="history-list"></div>
+        </section>
+      </section>
+
+      <section class="tab-screen" data-screen="guide">
+        <section class="panel page-panel">
+          <h2>GUIDE</h2>
+          <p>PULSARY je symbolický signál, nie klasický messenger.</p>
+        </section>
+
+        <section class="panel guide-item">
+          <strong>01 · Encode</strong>
+          <p>Napíš krátku správu, zadaj 4-miestny PIN a vytvor vizuálny signál.</p>
+        </section>
+
+        <section class="panel guide-item">
+          <strong>02 · Share</strong>
+          <p>Kód skopíruj alebo zdieľaj cez obľúbenú komunikačnú aplikáciu.</p>
+        </section>
+
+        <section class="panel guide-item">
+          <strong>03 · Decode</strong>
+          <p>Demo verzia číta správy z lokálnej histórie zariadenia. Pre zdieľanie medzi mobilmi bude ďalší krok Firebase alebo Supabase.</p>
+        </section>
+      </section>
+
+      <nav class="bottom-nav" aria-label="PULSARY navigation">
+        <button class="nav-btn active" data-target="encode">
+          <svg viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 10-13h-7l1-7z"/></svg>
+          <span>Encode</span>
+        </button>
+        <button class="nav-btn" data-target="decode">
+          <svg viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="1.5"/><rect x="9" y="9" width="6" height="6" rx=".8"/></svg>
+          <span>Decode</span>
+        </button>
+        <button class="nav-btn" data-target="guide">
+          <svg viewBox="0 0 24 24"><path d="M9.5 9a3 3 0 1 1 5.1 2.1c-1.2 1.1-2.6 1.8-2.6 3.4"/><path d="M12 18h.01"/></svg>
+          <span>Guide</span>
+        </button>
+      </nav>
+    </main>
+
+    <div id="toast" class="toast"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
